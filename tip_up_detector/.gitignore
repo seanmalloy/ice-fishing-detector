@@ -1,0 +1,8 @@
+Makefile
+.dep/
+*.lss
+*.lst
+*.map
+*.swp
+*.sym
+
