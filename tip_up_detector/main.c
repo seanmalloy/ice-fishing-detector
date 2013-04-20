@@ -1,7 +1,9 @@
 #include <stdint.h>
 #include <avr/io.h>
-//#include <avr/iotn2313.h>
 #include <avr/interrupt.h>
+#include "xbee1.h"
+
+//#include <avr/iotn2313.h>
 
 /*
  * main.c
@@ -10,9 +12,7 @@
  *      Author: sean
  */
 
-void setup();
-void calc_checksum();
-void calc_length();
+void setup(void);
 
 int main(void) {
 	setup();
@@ -82,36 +82,3 @@ ISR(USART_RX_vect) {
 	}
 }
 
-//
-// Implement API mode 2
-//
-
-// TODO calculate checksum byte
-// for API mode
-void calc_checksum() {
-
-}
-
-// TODO verify checksum byte
-// for API mode
-void verify_checksum() {
-
-}
-
-// TODO calculate length(MSB + LSB)
-// TODO figure out how to calculate the length (what is the length?)
-void calc_length() {
-
-}
-
-
-
-// TODO: implement TX Request (64-bit address)
-//                       _____Frame_Data_____
-// start_delim  length   API_Identifier  Data  checksum
-// 0x7E         MSB LSB  0x00            XXX   1 byte
-
-// TODO: implement RX Packet (64-bit address)
-//                       _____Frame_Data_____
-// start_delim  length   API_Identifier  Data checksum
-// 0x7E         MSB LSB  0x80            XXX  1 byte
