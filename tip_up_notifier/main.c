@@ -4,7 +4,7 @@
 #include "xbee1.h"
 // #include <avr/iotn2313.h>   // eventually remove this 
 
-void setup();
+void setup(void);
 
 int main(void) {
 	setup();
@@ -16,7 +16,7 @@ int main(void) {
 	return(1);
 }
 
-void setup() {
+void setup(void) {
 	// disable global interrupts
 	cli();
 
