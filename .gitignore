@@ -1,5 +1,12 @@
+Makefile
 *.eep
 *.elf
 *.hex
 *.o
 *.s
+*.lss
+*.lst
+*.map
+*.swp
+*.sym
+
