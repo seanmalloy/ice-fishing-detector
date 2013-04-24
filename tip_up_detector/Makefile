@@ -477,6 +477,8 @@ clean_list :
 	$(REMOVE) $(SRC:.c=.d)
 	$(REMOVE) $(SRC:.c=.i)
 	$(REMOVEDIR) .dep
+	$(REMOVEDIR) ../include/xbee1.o
+	$(REMOVEDIR) ../include/xbee1.lst
 
 # Create object files directory
 $(shell mkdir $(OBJDIR) 2>/dev/null)
