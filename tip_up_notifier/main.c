@@ -1,14 +1,8 @@
 #include <stdint.h>
 #include <avr/io.h>
-// #include <avr/iotn2313.h>
 #include <avr/interrupt.h>
-
-/*
- * main.c
- *
- *  Created on: Oct 26, 2011
- *      Author: sean
- */
+#include "xbee1.h"
+// #include <avr/iotn2313.h>   // eventually remove this 
 
 void setup();
 
