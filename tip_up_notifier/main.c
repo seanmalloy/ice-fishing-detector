@@ -74,6 +74,33 @@ ISR(TIMER1_COMPA_vect) {
 	// Toggle LED
 	PORTB ^= _BV(PB3);
 
+        // START
+        // 5/9/2012 - Length in API packets looks correct now
+        //            Next step verify frame data and checksum.
+        unsigned int addr = 1;
+        unsigned char data[1] = { 0x53 }; // ASCI captial S
+        tx_request16 tx_packet = create_tx_request16(data, addr);
+
 	// send data out the UART
-	UDR = 0x53; // ASCII capital S
+        while (( UCSRA & (1 << UDRE )) == 0) {}; // Do nothing until UDR is ready for more data to be written to it
+	UDR = tx_packet.start_delim;
+        while (( UCSRA & (1 << UDRE )) == 0) {};
+	UDR = tx_packet.msb_length;
+        while (( UCSRA & (1 << UDRE )) == 0) {};
+	UDR = tx_packet.lsb_length;
+        while (( UCSRA & (1 << UDRE )) == 0) {};
+	UDR = tx_packet.api_id;
+        while (( UCSRA & (1 << UDRE )) == 0) {};
+	UDR = tx_packet.frame_id;
+        while (( UCSRA & (1 << UDRE )) == 0) {};
+	UDR = tx_packet.dest_addr;
+        while (( UCSRA & (1 << UDRE )) == 0) {};
+	UDR = tx_packet.tx_opts;
+        for (unsigned int i = 0; i != 1; i++) {
+            while (( UCSRA & (1 << UDRE )) == 0) {};
+	    UDR = tx_packet.rf_data[i];
+        }
+        while (( UCSRA & (1 << UDRE )) == 0) {};
+	UDR = tx_packet.checksum;
 }
+
