@@ -75,10 +75,14 @@ ISR(TIMER1_COMPA_vect) {
 	PORTB ^= _BV(PB3);
 
         // START
-        // 5/9/2012 - Length in API packets looks correct now
-        //            Next step verify frame data and checksum.
+        // 5/09/2013 - Length in API packets looks correct now
+        // 5/16/2013 - Frame data and checksum are now correct
+        //
+        // Need to test and verify with different inputs
+        //      Different values for destination address
+        //      Different values for data array (always three elements)
         unsigned int addr = 1;
-        unsigned char data[1] = { 0x53 }; // ASCI captial S
+        unsigned char data[3] = { 0x07, 0x07, 0x07 };
         tx_request16 tx_packet = create_tx_request16(data, addr);
 
 	// send data out the UART
@@ -93,10 +97,12 @@ ISR(TIMER1_COMPA_vect) {
         while (( UCSRA & (1 << UDRE )) == 0) {};
 	UDR = tx_packet.frame_id;
         while (( UCSRA & (1 << UDRE )) == 0) {};
-	UDR = tx_packet.dest_addr;
+	UDR = tx_packet.msb_dest_addr;
+        while (( UCSRA & (1 << UDRE )) == 0) {};
+	UDR = tx_packet.lsb_dest_addr;
         while (( UCSRA & (1 << UDRE )) == 0) {};
 	UDR = tx_packet.tx_opts;
-        for (unsigned int i = 0; i != 1; i++) {
+        for (unsigned int i = 0; i != 3; i++) {
             while (( UCSRA & (1 << UDRE )) == 0) {};
 	    UDR = tx_packet.rf_data[i];
         }
